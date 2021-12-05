@@ -2,22 +2,28 @@ package group_anagrams
 
 import (
 	"container/list"
-	"sort"
+	"fmt"
 )
 
 func groupAnagrams(strs []string) [][]string {
 	exist := make(map[string]*list.List)
 	for _, str := range strs {
-		buffer := []byte(str)
-		sort.Slice(buffer, func(i, j int) bool {
-			return buffer[i] < buffer[j]
-		})
-		sorted := string(buffer)
-
-		if exist[sorted] == nil {
-			exist[sorted] = list.New()
+		hash := make([]int, 26)
+		for _, c := range str {
+			hash[c-'a'] += 1
 		}
-		exist[sorted].PushBack(str)
+
+		var hashCode string
+		for index, num := range hash {
+			if num != 0 {
+				hashCode += fmt.Sprintf("%c%d", 'a'+index, num)
+			}
+		}
+
+		if exist[hashCode] == nil {
+			exist[hashCode] = list.New()
+		}
+		exist[hashCode].PushBack(str)
 	}
 
 	results := make([][]string, 0)
