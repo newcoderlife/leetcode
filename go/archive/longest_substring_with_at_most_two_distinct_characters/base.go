@@ -5,7 +5,7 @@ func lengthOfLongestSubstringTwoDistinct(s string) int {
 	prev, result := 0, 0
 	for i := 0; i < len(s); i++ {
 		exist[s[i]]++
-		if exist[s[i]] == 1 && len(exist) > 2 {
+		if len(exist) > 2 {
 			for {
 				exist[s[prev]]--
 				if exist[s[prev]] == 0 {
