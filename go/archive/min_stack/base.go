@@ -1,46 +1,51 @@
 package min_stack
 
-import "container/list"
+import (
+	"container/list"
+	"math"
+)
 
 type MinStack struct {
-	buffer  *list.List
-	current int
+	buffer     *list.List
+	currentMin int
 }
 
 func Constructor() MinStack {
-	return MinStack{buffer: list.New()}
+	return MinStack{buffer: list.New(), currentMin: math.MaxInt64}
 }
 
-func (s *MinStack) Push(val int) {
-	if s.buffer.Len() == 0 {
-		s.current = val
-	}
-
-	s.buffer.PushBack(val - s.current)
-	if val < s.current {
-		s.current = val
+func (this *MinStack) Push(val int) {
+	this.buffer.PushBack(val - this.currentMin)
+	if val < this.currentMin {
+		this.currentMin = val
 	}
 }
 
-func (s *MinStack) Pop() {
-	if s.buffer.Len() == 0 {
+func (this *MinStack) Pop() {
+	if this.buffer.Len() == 0 {
 		return
 	}
-	v := s.buffer.Back().Value.(int)
-	if v < 0 {
-		s.current -= v // 计算曾经的最小值
+
+	delta := this.buffer.Back().Value.(int)
+	if delta < 0 {
+		this.currentMin -= delta
 	}
-	s.buffer.Remove(s.buffer.Back())
+
+	this.buffer.Remove(this.buffer.Back())
 }
 
-func (s *MinStack) Top() int {
-	v := s.buffer.Back().Value.(int)
-	if v > 0 {
-		return v + s.current
+func (this *MinStack) Top() int {
+	if this.buffer.Len() == 0 {
+		return 0
 	}
-	return +s.current
+
+	delta := this.buffer.Back().Value.(int)
+	if delta < 0 {
+		return this.currentMin
+	}
+	return delta + this.currentMin
 }
 
-func (s *MinStack) GetMin() int {
-	return s.current
+func (this *MinStack) GetMin() int {
+	return this.currentMin
 }
