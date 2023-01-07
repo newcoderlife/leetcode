@@ -31,7 +31,7 @@ func (o *Occurs) Pop() interface{} {
 	return result
 }
 
-func topKFrequent(nums []int, k int) []int {
+func topKFrequentHeap(nums []int, k int) []int {
 	if k > len(nums) {
 		k = len(nums)
 	}

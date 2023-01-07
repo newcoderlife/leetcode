@@ -2,11 +2,11 @@ package print_immutable_linked_list_in_reverse
 
 type ImmutableListNode struct{}
 
-func (this *ImmutableListNode) getNext() ImmutableListNode { return ImmutableListNode{} }
+func (this *ImmutableListNode) getNext() *ImmutableListNode { return new(ImmutableListNode) }
 
 func (this *ImmutableListNode) printValue() {}
 
-func printLinkedListInReverse(head ImmutableListNode) {
+func printLinkedListInReverse(head *ImmutableListNode) {
 	if head == nil {
 		return
 	}
