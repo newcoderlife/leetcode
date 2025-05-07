@@ -14,3 +14,17 @@ func productExceptSelf(nums []int) []int {
 
 	return result
 }
+
+func _productExceptSelf(nums []int) []int {
+	results := make([]int, len(nums))
+	for i, pre := 0, 1; i < len(nums); i++ {
+		results[i] = pre
+		pre *= nums[i]
+	}
+	for i, suc := len(nums)-1, 1; i >= 0; i-- {
+		results[i] *= suc
+		suc *= nums[i]
+	}
+
+	return results
+}

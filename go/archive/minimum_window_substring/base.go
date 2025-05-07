@@ -32,3 +32,32 @@ func minWindow(s string, t string) string {
 	}
 	return result
 }
+
+func _minWindow(s string, t string) string {
+	target := make(map[byte]int)
+	for i := 0; i < len(t); i++ {
+		target[t[i]]++
+	}
+
+	result := ""
+	count := 0
+	current := make(map[byte]int)
+	for left, right := 0, 0; right < len(s); right++ {
+		current[s[right]]++
+		if current[s[right]] == target[s[right]] {
+			count++
+		}
+
+		for ; left <= right && count == len(target); left++ {
+			if len(result) == 0 || right-left+1 < len(result) {
+				result = s[left : right+1]
+			}
+			current[s[left]]--
+			if current[s[left]] < target[s[left]] {
+				count--
+			}
+		}
+	}
+
+	return result
+}

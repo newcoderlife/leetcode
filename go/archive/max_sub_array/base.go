@@ -22,3 +22,18 @@ func maxSubArray(nums []int) int {
 	}
 	return maxSub
 }
+
+func _maxSubArray(nums []int) int {
+	result, current := nums[0], nums[0]
+	for i := 1; i < len(nums); i++ {
+		if current < 0 {
+			current = 0
+		}
+		current += nums[i]
+		if current > result {
+			result = current
+		}
+	}
+
+	return result
+}
