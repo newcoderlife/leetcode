@@ -25,3 +25,43 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 	}
 	return p1
 }
+
+func _getIntersectionNode(headA, headB *ListNode) *ListNode {
+	if headA == nil || headB == nil {
+		return nil
+	}
+
+	hash := make(map[*ListNode]bool)
+	for current := headA; current != nil; current = current.Next {
+		hash[current] = true
+	}
+	for current := headB; current != nil; current = current.Next {
+		if hash[current] {
+			return current
+		}
+	}
+	return nil
+}
+
+func __getIntersectionNode(headA, headB *ListNode) *ListNode {
+	if headA == nil || headB == nil {
+		return nil
+	}
+
+	for currentA, currentB := headA, headB; currentA != nil || currentB != nil; {
+		if currentA == currentB {
+			return currentA
+		}
+		if currentA != nil {
+			currentA = currentA.Next
+		} else {
+			currentA = headB
+		}
+		if currentB != nil {
+			currentB = currentB.Next
+		} else {
+			currentB = headA
+		}
+	}
+	return nil
+}
