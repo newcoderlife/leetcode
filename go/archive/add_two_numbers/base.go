@@ -32,3 +32,23 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return head.Next
 }
+
+func _addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	result := new(ListNode)
+	for current, delta := result, 0; l1 != nil || l2 != nil || delta != 0; current = current.Next {
+		current.Next = new(ListNode)
+		if l1 != nil {
+			current.Next.Val += l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			current.Next.Val += l2.Val
+			l2 = l2.Next
+		}
+		current.Next.Val += delta
+		delta = current.Next.Val / 10
+		current.Next.Val %= 10
+	}
+
+	return result.Next
+}

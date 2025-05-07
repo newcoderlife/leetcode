@@ -30,3 +30,20 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	dfs(pivot, head)
 	return pivot.Next
 }
+
+func _removeNthFromEnd(head *ListNode, n int) *ListNode {
+	length := 0
+	for current := head; current != nil; current = current.Next {
+		length++
+	}
+	n = length - n
+	result := &ListNode{Next: head}
+	for current, count := result, 0; current != nil; current, count = current.Next, count+1 {
+		if count == n {
+			current.Next = current.Next.Next
+			break
+		}
+	}
+
+	return result.Next
+}
